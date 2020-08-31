@@ -4,11 +4,19 @@ class Api::V1::Merchants::MerchantsController < ApplicationController
   end
 
   def show
-    render json: MerchantSerializer.new(Merchant.find(params[:id])), status: :ok
+    begin
+      render json: MerchantSerializer.new(Merchant.find(params[:id])), status: :ok
+    rescue => e
+      render json: { error: { status: 404, message: e.message }}, status: :not_found
+    end
   end
 
   def create
-    render json: MerchantSerializer.new(Merchant.create(merchant_params)), status: :created
+    begin
+      render json: MerchantSerializer.new(Merchant.create!(merchant_params)), status: :created
+    rescue
+      render json: { error: { status: 400, message: 'Resource not saved check on your values.'}}
+    end
   end
 
   def update
@@ -24,7 +32,5 @@ class Api::V1::Merchants::MerchantsController < ApplicationController
   def merchant_params
     params.require(:merchant).permit(:name)
   end
-  #TODO update  action
-  #TODO destroy action
-  #TODO commit the changes
+  #TODO sad paths for show update create and delete
 end
