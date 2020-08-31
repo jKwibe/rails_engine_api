@@ -8,6 +8,8 @@ Rails.application.routes.draw do
         post '/', to: 'merchants#create'
         patch '/:id', to: 'merchants#update'
         delete '/:id', to: 'merchants#destroy'
+
+        get '/:id/items', to: 'items#index'
       end
 
       namespace :items do
@@ -16,6 +18,8 @@ Rails.application.routes.draw do
         post '/', to: 'items#create'
         patch '/:id', to: 'items#update'
         delete '/:id', to: 'items#destroy'
+
+        get '/:id/merchant', to: 'merchant#index'
       end
     end
   end
