@@ -9,6 +9,14 @@ Rails.application.routes.draw do
         patch '/:id', to: 'merchants#update'
         delete '/:id', to: 'merchants#destroy'
       end
+
+      namespace :items do
+        get '/', to: 'items#index'
+        get '/:id', to: 'items#show'
+        post '/', to: 'items#create'
+        patch '/:id', to: 'items#update'
+        delete '/:id', to: 'items#destroy'
+      end
     end
   end
 end
