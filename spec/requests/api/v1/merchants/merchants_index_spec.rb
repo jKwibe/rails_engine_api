@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe 'shows all merchants' do
-  #TODO write test to get all merchant
   before :each do
     @merchant_1 = create(:merchant)
     @merchant_2 = create(:merchant)
