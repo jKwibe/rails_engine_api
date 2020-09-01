@@ -30,7 +30,7 @@ class Api::V1::Merchants::MerchantsController < ApplicationController
   private
 
   def merchant_params
-    params.require(:merchant).permit(:name)
+    params.permit(:name)
   end
   #TODO sad paths for show update create and delete
 end
