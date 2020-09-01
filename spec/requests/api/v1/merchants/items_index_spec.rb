@@ -17,6 +17,6 @@ RSpec.describe 'Merchant Items'do
     data =  JSON.parse(response.body, symbolize_names: true)
     expect(response.status).to eq(200)
     expect(data[:data].size).to eq(2)
-    expect(data[:data][0][:attributes].keys).to eq([:name, :description, :unit_price])
+    expect(data[:data][0][:attributes].keys).to eq([:name, :description, :unit_price, :merchant_id])
   end
 end

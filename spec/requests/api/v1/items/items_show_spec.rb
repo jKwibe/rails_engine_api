@@ -17,7 +17,7 @@ RSpec.describe 'Show item' do
     data = JSON.parse(response.body, symbolize_names: true)
 
     expect(response.status).to eq(200)
-    expect(data[:data][:attributes].keys).to eq([:name, :description, :unit_price])
+    expect(data[:data][:attributes].keys).to eq([:name, :description, :unit_price, :merchant_id])
     expect(data[:data][:attributes][:name]).to eq(@item_4.name)
     expect(data[:data][:attributes][:description]).to eq(@item_4.description)
     expect(data[:data][:attributes][:unit_price]).to eq(@item_4.unit_price)
