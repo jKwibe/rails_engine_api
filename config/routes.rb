@@ -14,6 +14,8 @@ Rails.application.routes.draw do
 
       namespace :items do
         get '/', to: 'items#index'
+        get '/find', to: 'search#show'
+        get '/find_all', to: 'search#index'
         get '/:id', to: 'items#show'
         post '/', to: 'items#create'
         patch '/:id', to: 'items#update'
