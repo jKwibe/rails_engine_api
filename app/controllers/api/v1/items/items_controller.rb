@@ -30,7 +30,8 @@ class Api::V1::Items::ItemsController < ApplicationController
 
   def destroy
     begin
-      render json: ItemSerializer.new(Item.destroy(params[:id])), status: :ok
+      Item.destroy(params[:id])
+      render  status: :no_content
     rescue => error
       render json: {error: {status: 404, message: error.message}}, status: :not_found
     end

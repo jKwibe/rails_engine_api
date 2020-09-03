@@ -6,11 +6,8 @@ RSpec.describe 'Delete Item' do
     create(:item)
     delete "/api/v1/items/#{item.id}"
 
-    data = JSON.parse(response.body, symbolize_names: true)
 
-    expect(response.status).to eq(200)
-    expect(data[:data][:attributes][:name]).to eq('Colgate')
-    expect(data[:data][:id]).to eq(item.id.to_s)
+    expect(response.status).to eq(204)
     expect{ Item.find(item.id) }.to raise_error(ActiveRecord::RecordNotFound)
   end
 
