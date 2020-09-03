@@ -14,8 +14,8 @@ class Api::V1::Merchants::MerchantsController < ApplicationController
   def create
     begin
       render json: MerchantSerializer.new(Merchant.create!(merchant_params)), status: :created
-    rescue
-      render json: { error: { status: 400, message: 'Resource not saved check on your values.'}}
+    rescue => error
+      render json: { error: { status: 400, message: error.message } }, status: :bad_request
     end
   end
 
