@@ -24,7 +24,8 @@ class Api::V1::Merchants::MerchantsController < ApplicationController
   end
 
   def destroy
-    render json: MerchantSerializer.new(Merchant.destroy(params[:id])), status: :ok
+    Merchant.destroy(params[:id])
+    render status: :no_content
   end
 
   private
