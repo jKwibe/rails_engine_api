@@ -6,7 +6,10 @@ Rails.application.routes.draw do
         get '/', to: 'merchants#index'
         get '/find', to: 'search#show'
         get '/find_all', to: 'search#index'
+        get '/most_items', to: 'most_items#index'
+        get '/most_revenue', to: 'most_items#show'
         get '/:id', to: 'merchants#show'
+        get '/:id/revenue', to: 'revenue#show'
         post '/', to: 'merchants#create'
         patch '/:id', to: 'merchants#update'
         delete '/:id', to: 'merchants#destroy'
@@ -25,6 +28,8 @@ Rails.application.routes.draw do
 
         get '/:id/merchant', to: 'merchant#index'
       end
+
+      get '/revenue', to: 'merchants/revenue#index'
     end
   end
 end
