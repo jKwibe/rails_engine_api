@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe 'Show Merchant' do
-  #TODO write test for sad paths
   before :each do
     @merchant_1 = create(:merchant)
     @merchant_2 = create(:merchant)
@@ -17,5 +16,14 @@ RSpec.describe 'Show Merchant' do
     expect(data[:data][:id]).to eq(@merchant_3.id.to_s)
     expect(data[:data].keys).to eq([:id, :type, :attributes])
     expect(data[:data][:attributes].keys).to eq([:name])
+  end
+
+  it 'should throw error' do
+    get "/api/v1/merchants/b44"
+
+    error = JSON.parse(response.body, symbolize_names: true)
+
+    expect(response.status).to eq(404)
+    expect(error[:error][:message]).to eq("Couldn't find Merchant with 'id'=b44")
   end
 end

@@ -1,6 +1,10 @@
 class Api::V1::Items::ItemsController < ApplicationController
   def index
-    render json: ItemSerializer.new(Item.all), status: :ok
+    begin
+      render json: ItemSerializer.new(Item.all), status: :ok
+    rescue => error
+      render json: { error: { message: 'Server Error', status: 500}}, status: :internal_server_error
+    end
   end
 
   def show
