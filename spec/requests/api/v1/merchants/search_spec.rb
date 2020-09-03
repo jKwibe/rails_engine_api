@@ -2,16 +2,16 @@ require 'rails_helper'
 
 RSpec.describe 'Merchant Find' do
   before(:each) do
-    create(:merchant, name: 'Korra Inc')
-    create(:merchant, name: 'Rokku Inc')
-    create(:merchant, name: 'Kyoshi Inc')
-    create(:merchant, name: 'Aang Inc')
+    @merchant1 = create(:merchant, name: 'Korra Inc')
+    @merchant2 = create(:merchant, name: 'Rokku Inc')
+    @merchant3 = create(:merchant, name: 'Kyoshi Inc')
+    @merchant4 = create(:merchant, name: 'Aang Inc')
   end
   it 'Find Single' do
     get '/api/v1/merchants/find?name=k'
     data = JSON.parse(response.body, symbolize_names: true)
     expect(response.status).to eq(200)
-    expect(data[:data][:attributes][:name]).to eq('Korra Inc')
+    expect(data[:data][:attributes][:name]).to eq(@merchant1.name)
   end
 
   it 'Find Single Throws error' do

@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe 'can create merchant' do
-  #TODO Add sad paths for create
-  # TODO {wrong attribute name}
   it 'creates merchant' do
     post '/api/v1/merchants', params: { name: 'Last code bender inc'}
 

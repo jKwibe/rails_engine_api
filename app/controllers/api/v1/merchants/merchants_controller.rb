@@ -7,15 +7,15 @@ class Api::V1::Merchants::MerchantsController < ApplicationController
     begin
       render json: MerchantSerializer.new(Merchant.find(params[:id])), status: :ok
     rescue => e
-      render json: { error: { status: 404, message: e.message }}, status: :not_found
+      render json: { error: { status: 404, message: e.message } }, status: :not_found
     end
   end
 
   def create
     begin
       render json: MerchantSerializer.new(Merchant.create!(merchant_params)), status: :created
-    rescue => error
-      render json: { error: { status: 400, message: error.message } }, status: :bad_request
+    rescue => e
+      render json: { error: { status: 400, message: e.message } }, status: :bad_request
     end
   end
 
@@ -33,5 +33,4 @@ class Api::V1::Merchants::MerchantsController < ApplicationController
   def merchant_params
     params.permit(:name)
   end
-  #TODO sad paths for show update create and delete
 end
