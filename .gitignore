@@ -25,4 +25,6 @@
 .idea/
 .generators
 .DS_Store
+
 coverage/
+
