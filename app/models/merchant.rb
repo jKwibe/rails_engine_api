@@ -7,29 +7,33 @@ class Merchant < ApplicationRecord
   has_many :customers, through: :invoices
   has_many :transactions, through: :invoices
 
+  scope :successful_shipped, -> {
+    joins(invoices: [:transactions, :invoice_items])
+      .where("invoices.status = 'shipped' AND transactions.result = 'success'")
+  }
+
+  scope :items_sold, ->(limit){
+    successful_shipped
+      .select('merchants.*, SUM(invoice_items.quantity) AS sum_invoice_items_quantity')
+      .order('sum_invoice_items_quantity DESC')
+      .limit(limit)
+      .group(:id)
+  }
+
+  scope :most_revenue, ->(limit) {
+    successful_shipped
+      .select('merchants.*, SUM(invoice_items.quantity * invoice_items.unit_price) as sum_invoice_quantity')
+      .order('sum_invoice_quantity DESC')
+      .limit(limit)
+      .group(:id)
+  }
+
   def self.find_match(query_params)
     where("lower(#{query_params.keys.first}) LIKE ?", "%#{query_params.values.first.downcase}%").first
   end
 
   def self.find_all(query_params)
     where("lower(#{query_params.keys.first}) LIKE ?", "%#{query_params.values.first.downcase}%")
-  end
-
-  def self.items_sold(limit)
-    joins(invoices: [:transactions, :invoice_items])
-    .where("invoices.status = 'shipped' AND transactions.result = 'success'")
-    .group(:id)
-    .select('merchants.* , SUM(invoice_items.quantity) AS items_sold')
-    .order(items_sold: :desc)
-    .limit(limit)
-  end
-
-  def self.most_revenue(limit)
-    joins(invoices: [:transactions, :invoice_items])
-    .where("transactions.result = 'success' AND invoices.status = 'shipped'")
-    .group(:id).select("merchants.* , SUM(invoice_items.quantity * invoice_items.unit_price) AS total_revenue")
-    .order(total_revenue: :desc)
-    .limit(limit)
   end
 
   def revenue

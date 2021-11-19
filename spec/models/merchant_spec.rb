@@ -55,20 +55,20 @@ RSpec.describe Merchant, type: :model do
       expect(data.size).to eq(3)
     end
 
-    xit '.items_sold' do
+    it '.items_sold' do
       rank = Merchant.items_sold(2)
-      expect(rank.size).to eq(2)
+      expect(rank.to_a.size).to eq(2)
       expect(rank[0].name).to eq('Korra Inc')
     end
 
-    xit '.most revenue' do
+    it '.most revenue' do
       rank = Merchant.most_revenue(2)
-      expect(rank.size).to eq(2)
-      expect(rank[0].name).to eq('Korra Inc')
+      expect(rank.to_a.size).to eq(2)
+      expect(rank[0].name).to eq('Kyoshi Inc')
     end
 
     it '#revenue' do
-      revenue = @merchant1.revenue
+      revenue = @merchant1.revenue.round(2)
       expect(revenue).to eq(1186.65)
     end
   end
