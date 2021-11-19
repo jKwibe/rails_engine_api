@@ -14,7 +14,10 @@ RSpec.describe 'Show Merchant' do
 
     expect(response.status).to eq(200)
     expect(data[:data][:id]).to eq(@merchant_3.id.to_s)
-    expect(data[:data].keys).to eq([:id, :type, :attributes])
+    expect(data[:data].keys).to include(:id)
+    expect(data[:data].keys).to include(:type)
+    expect(data[:data].keys).to include(:attributes)
+    expect(data[:data].keys).to include(:relationships)
     expect(data[:data][:attributes].keys).to eq([:name])
   end
 

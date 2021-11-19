@@ -26,7 +26,10 @@ RSpec.describe 'Merchant Find' do
     expect(response.status).to eq(200)
     expect(data[:data][0][:attributes].keys).to eq([:name])
     expect(data[:data].size).to eq(3)
-    expect(data[:data].first.keys).to eq([:id, :type, :attributes])
+    expect(data[:data].first.keys).to include(:id)
+    expect(data[:data].first.keys).to include(:type)
+    expect(data[:data].first.keys).to include(:relationships)
+    expect(data[:data].first.keys).to include(:attributes)
   end
 
   it 'Find Multiple Throws error' do

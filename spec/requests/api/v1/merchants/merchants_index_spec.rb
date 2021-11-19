@@ -15,7 +15,10 @@ RSpec.describe 'shows all merchants' do
     expect(response).to be_successful
     expect(response.status).to eq(200)
 
-    expect(data[:data].first.keys).to eq([:id, :type, :attributes])
+    expect(data[:data].first.keys).to include(:id)
+    expect(data[:data].first.keys).to include(:type)
+    expect(data[:data].first.keys).to include(:relationships)
+    expect(data[:data].first.keys).to include(:attributes)
     expect(data[:data].first[:attributes].keys).to eq([:name])
     expect(data[:data].length).to eq(4)
   end
