@@ -28,13 +28,9 @@ class Merchant < ApplicationRecord
       .group(:id)
   }
 
-  def self.find_match(query_params)
-    where("lower(#{query_params.keys.first}) LIKE ?", "%#{query_params.values.first.downcase}%").first
-  end
-
-  def self.find_all(query_params)
-    where("lower(#{query_params.keys.first}) LIKE ?", "%#{query_params.values.first.downcase}%")
-  end
+  scope :filter_by_params, ->(key, value) {
+    where("lower(#{key}) LIKE ?", "%#{value.downcase}%")
+  }
 
   def revenue
     invoice_items
