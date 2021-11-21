@@ -8,7 +8,10 @@ RSpec.describe 'Item Create' do
     resource = JSON.parse(response.body, symbolize_names: true)
 
     expect(response.status).to eq(201)
-    expect(resource[:data].keys).to eq([:id, :type, :attributes])
+    expect(resource[:data].keys).to include(:id)
+    expect(resource[:data].keys).to include(:type)
+    expect(resource[:data].keys).to include(:attributes)
+    expect(resource[:data].keys).to include(:relationships)
     expect(resource[:data][:attributes].keys).to eq([:name, :description, :unit_price, :merchant_id])
     expect(resource[:data][:attributes][:name]).to eq('colgate')
     expect(resource[:data][:attributes][:description]).to eq('Best Toothpaste')
@@ -21,7 +24,7 @@ RSpec.describe 'Item Create' do
     post '/api/v1/items', params: {name: 'colgate', unit_price: 9.50, merchant_id: merchant.id }
 
     error = JSON.parse(response.body, symbolize_names: true)
-    expect(response.status).to eq(422)
+    expect(response.status).to eq(400)
     expect(error[:error][:message]).to eq('Validation failed: Description can\'t be blank')
   end
 end

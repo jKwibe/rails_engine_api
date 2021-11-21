@@ -14,12 +14,6 @@ RSpec.describe 'Item Find' do
     expect(data[:data][:attributes][:name]).to eq('Colgate')
   end
 
-  it 'Find Single Throws error' do
-    get '/api/v1/items/find?bad_attribute=co'
-    error = JSON.parse(response.body, symbolize_names: true)
-    expect(error[:error][:message]).to eq('Unidentified attribute Entered')
-  end
-
   it 'Finds Multiple' do
     get '/api/v1/items/find_all?name=om'
     data = JSON.parse(response.body, symbolize_names: true)
@@ -28,9 +22,4 @@ RSpec.describe 'Item Find' do
     expect(data[:data].size).to eq(2)
   end
 
-  it 'Find Multiple Throws error' do
-    get '/api/v1/items/find_all?bad_attribute=co'
-    error = JSON.parse(response.body, symbolize_names: true)
-    expect(error[:error][:message]).to eq('Unidentified attribute Entered')
-  end
 end

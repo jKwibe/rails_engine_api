@@ -45,15 +45,6 @@ RSpec.describe Merchant, type: :model do
       @transaction5 = create(:transaction, invoice: @invoice1)
       @transaction6 = create(:transaction, invoice: @invoice1)
     end
-    it '.find_match' do
-      data = Merchant.find_match({"name": "k"})
-      expect(data.name).to eq("Korra Inc")
-    end
-
-    it '.find_all' do
-      data = Merchant.find_all({"name": "k"})
-      expect(data.size).to eq(3)
-    end
 
     it '.items_sold' do
       rank = Merchant.items_sold(2)

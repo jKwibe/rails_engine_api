@@ -33,7 +33,7 @@ RSpec.describe Invoice, type: :model do
     end
 
     it '.total_revenue' do
-      revenue = Invoice.total_revenue('2012-03-09', '2012-03-24')
+      revenue = Invoice.total_revenue(start: '2012-03-09', finish: '2012-03-24')
       expect(revenue).to eq(6768.93)
     end
   end

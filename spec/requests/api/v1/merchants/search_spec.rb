@@ -14,12 +14,6 @@ RSpec.describe 'Merchant Find' do
     expect(data[:data][:attributes][:name]).to eq(@merchant1.name)
   end
 
-  it 'Find Single Throws error' do
-    get '/api/v1/merchants/find?bad_attribute=k'
-    error = JSON.parse(response.body, symbolize_names: true)
-    expect(error[:error][:message]).to eq('Unidentified attribute Entered')
-  end
-
   it 'Finds Multiple' do
     get '/api/v1/merchants/find_all?name=k'
     data = JSON.parse(response.body, symbolize_names: true)
@@ -34,7 +28,9 @@ RSpec.describe 'Merchant Find' do
 
   it 'Find Multiple Throws error' do
     get '/api/v1/merchants/find_all?bad_attribute=co'
-    error = JSON.parse(response.body, symbolize_names: true)
-    expect(error[:error][:message]).to eq('Unidentified attribute Entered')
+    data = JSON.parse(response.body, symbolize_names: true)
+    expect(response.status).to eq(200)
+    expect(data[:data][0][:attributes].keys).to eq([:name])
+    expect(data[:data].size).to eq(4)
   end
 end
