@@ -5,7 +5,7 @@ class Invoice < ApplicationRecord
   has_many :invoice_items
   has_many :items, through: :invoice_items
 
-  def self.total_revenue(start, finish)
+  def self.total_revenue(start:, finish:)
     start = Date.parse(start).beginning_of_day
     finish = Date.parse(finish).beginning_of_day
 

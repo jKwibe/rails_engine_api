@@ -1,9 +1,9 @@
 class Api::V1::Merchants::RevenueController < ApplicationController
   def show
-    render json: RevenueSerializer.new(MerchantRevenue.new(params[:id])), status: :ok
+    render json: object_serializer(RevenueSerializer, MerchantRevenue.new(params[:id])), status: :ok
   end
 
   def index
-    render json: RevenueSerializer.new(TotalRevenue.new(params[:start], params[:end])), status: :ok
+    render json: object_serializer(RevenueSerializer, TotalRevenue.new(start_time: params[:start], end_time: params[:end]))
   end
 end

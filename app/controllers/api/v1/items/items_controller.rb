@@ -1,44 +1,24 @@
 class Api::V1::Items::ItemsController < ApplicationController
   def index
-    begin
-      render json: ItemSerializer.new(Item.all), status: :ok
-    rescue => error
-      render json: { error: { message: 'Server Error', status: 500}}, status: :internal_server_error
-    end
+    render json: object_serializer(ItemSerializer, Item.all), status: :ok
   end
 
   def show
-    begin
-      render json: ItemSerializer.new(Item.find(params[:id])), status: :ok
-    rescue => e
-      render json: {error: { status: 404, message: e.message}}, status: :not_found
-    end
+    render json: object_serializer(ItemSerializer, Item.find(params[:id])), status: :ok
   end
 
   def create
-    begin
-      merchant = Merchant.find(params[:merchant_id])
-      render json: ItemSerializer.new(merchant.items.create!(item_params)), status: :created
-    rescue => error
-      render json: { error: { status: 422, message: error.message}}, status: :unprocessable_entity
-    end
+    merchant = Merchant.find(params[:merchant_id])
+    render json: object_serializer(ItemSerializer, merchant.items.create!(item_params)), status: :created
   end
 
   def update
-    begin
-     render json: ItemSerializer.new(Item.update(params[:id], item_params)), status: :ok
-    rescue => error
-      render json: {error: {status: 404, message: error.message}}, status: :not_found
-    end
+    render json: object_serializer(ItemSerializer, Item.update(params[:id], item_params)), status: :ok
   end
 
   def destroy
-    begin
-      Item.destroy(params[:id])
-      render  status: :no_content
-    rescue => error
-      render json: {error: {status: 404, message: error.message}}, status: :not_found
-    end
+    Item.destroy(params[:id])
+    render json: { message: 'Resource has been destroyed' },  status: :ok
   end
 
   private
