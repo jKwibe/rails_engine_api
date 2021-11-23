@@ -27,6 +27,6 @@ RSpec.describe 'Show Merchant' do
     error = JSON.parse(response.body, symbolize_names: true)
 
     expect(response.status).to eq(404)
-    expect(error[:error][:message]).to eq("Couldn't find Merchant with 'id'=b44")
+    expect(error[:data][:attributes][:message]).to eq("Couldn't find Merchant with 'id'=b44")
   end
 end

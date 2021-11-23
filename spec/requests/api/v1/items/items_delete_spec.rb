@@ -18,6 +18,6 @@ RSpec.describe 'Delete Item' do
     data = JSON.parse(response.body, symbolize_names: true)
 
     expect(response.status).to eq(404)
-    expect(data[:error][:message]).to eq("Couldn't find Item with 'id'=m99")
+    expect(data[:data][:attributes][:message]).to eq("Couldn't find Item with 'id'=m99")
   end
 end

@@ -14,6 +14,6 @@ RSpec.describe 'can create merchant' do
 
     error =  JSON.parse(response.body, symbolize_names: true)
     expect(response.status).to eq(400)
-    expect(error[:error][:message]).to eq('Validation failed: Name can\'t be blank')
+    expect(error[:data][:attributes][:message]).to eq('Validation failed: Name can\'t be blank')
   end
 end

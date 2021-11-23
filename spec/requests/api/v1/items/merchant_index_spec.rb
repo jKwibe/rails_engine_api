@@ -18,6 +18,6 @@ RSpec.describe 'Merchant Item' do
 
     error = JSON.parse(response.body, symbolize_names: true)
     expect(response.status).to eq(404)
-    expect(error[:error][:message]).to eq("Couldn't find Item with 'id'=b44")
+    expect(error[:data][:attributes][:message]).to eq("Couldn't find Item with 'id'=b44")
   end
 end
