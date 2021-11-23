@@ -82,4 +82,12 @@ RSpec.describe 'Merchants stats' do
     expect(data[:data].keys).to eq([:id, :type, :attributes])
     expect(data[:data][:attributes][:revenue]).to eq(6768.93)
   end
+
+  it 'Returns error if start and end params are not defined' do
+    get '/api/v1/revenue'
+
+    error = JSON.parse(response.body, symbolize_names: true)
+    expect(error[:data][:attributes][:message]).to eq('[start] and [end] query params should be defined')
+    expect(response.status).to eq(422)
+  end
 end
