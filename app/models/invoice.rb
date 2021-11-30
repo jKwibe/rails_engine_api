@@ -6,11 +6,11 @@ class Invoice < ApplicationRecord
   has_many :items, through: :invoice_items
 
   def self.total_revenue(start:, finish:)
-    start = Date.parse(start).beginning_of_day
-    finish = Date.parse(finish).beginning_of_day
+    start_date = Date.parse(start).beginning_of_day
+    end_date = Date.parse(finish).beginning_of_day
 
     joins(:transactions, :invoice_items)
-      .where("invoices.status = 'shipped' AND transactions.result = 'success' AND invoices.updated_at BETWEEN ? AND ?", start, finish)
+      .where("invoices.status = 'shipped' AND transactions.result = 'success' AND invoices.updated_at BETWEEN ? AND ?", start_date, end_date)
       .sum('invoice_items.unit_price * invoice_items.quantity')
   end
 end
