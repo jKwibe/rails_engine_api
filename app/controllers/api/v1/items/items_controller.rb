@@ -17,8 +17,7 @@ class Api::V1::Items::ItemsController < ApplicationController
   end
 
   def destroy
-    Item.destroy(params[:id])
-    render json: { message: 'Resource has been destroyed' },  status: :ok
+    render json: object_serializer(ItemSerializer, Item.destroy(params[:id])),  status: :ok
   end
 
   private

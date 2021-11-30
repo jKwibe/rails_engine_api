@@ -16,8 +16,7 @@ class Api::V1::Merchants::MerchantsController < ApplicationController
   end
 
   def destroy
-    Merchant.destroy(params[:id])
-    render json: { message: "Merchant id #{params[:id]} has been destroyed successfully"}, status: :ok
+    render json: object_serializer(MerchantSerializer, Merchant.destroy(params[:id])), status: :ok
   end
 
   private
