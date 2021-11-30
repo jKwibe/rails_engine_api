@@ -8,5 +8,4 @@ class Api::V1::Items::SearchController < ApplicationController
     render json: object_serializer(ItemSerializer, Filter.scope_filter(request.query_parameters, 'Item')),
            status: :ok
   end
-
 end
