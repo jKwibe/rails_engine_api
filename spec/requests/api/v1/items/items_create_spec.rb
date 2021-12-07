@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe 'Item Create' do
-  it 'create an item' do
-    merchant = create(:merchant)
-    post '/api/v1/items', params: {name: 'colgate', description: 'Best Toothpaste', unit_price: 9.50, merchant_id: merchant.id }
+  let(:merchant) { create(:merchant) }
+  let(:resource) { JSON.parse(response.body, symbolize_names: true) }
 
-    resource = JSON.parse(response.body, symbolize_names: true)
+  it 'create an item' do
+    post '/api/v1/items', params: {name: 'colgate', description: 'Best Toothpaste', unit_price: 9.50, merchant_id: merchant.id }
 
     expect(response.status).to eq(201)
     expect(resource[:data].keys).to include(:id)
@@ -20,11 +20,9 @@ RSpec.describe 'Item Create' do
   end
 
   it 'raises an error if lack of details' do
-    merchant = create(:merchant)
     post '/api/v1/items', params: {name: 'colgate', unit_price: 9.50, merchant_id: merchant.id }
 
-    error = JSON.parse(response.body, symbolize_names: true)
     expect(response.status).to eq(400)
-    expect(error[:data][:attributes][:message]).to eq('Validation failed: Description can\'t be blank')
+    expect(resource[:data][:attributes][:message]).to eq('Validation failed: Description can\'t be blank')
   end
 end
